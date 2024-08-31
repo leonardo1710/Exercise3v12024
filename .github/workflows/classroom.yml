@@ -1,0 +1,155 @@
+name: Autograding Tests
+'on':
+  - push
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Java 16
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '16'
+      - name: oneMonthCalendar1
+        id: oneMonthCalendar1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: oneMonthCalendar1
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.oneMonthCalendar1
+          timeout: 1
+          max-score: 1
+      - name: oneMonthCalendar2
+        id: oneMonthCalendar2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: oneMonthCalendar2
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.oneMonthCalendar2
+          timeout: 1
+          max-score: 1
+      - name: lcg
+        id: lcg
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: lcg
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.lcg
+          timeout: 1
+          max-score: 2
+      - name: guessingGame1
+        id: guessingGame1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: guessingGame1
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.guessingGame1
+          timeout: 1
+          max-score: 1
+      - name: guessingGame2
+        id: guessingGame2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: guessingGame2
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.guessingGame2
+          timeout: 1
+          max-score: 1
+      - name: randomNumberBetweenOneAndHundred
+        id: randomNumberBetweenOneAndHundred
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: randomNumberBetweenOneAndHundred
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.randomNumberBetweenOneAndHundred
+          timeout: 1
+          max-score: 1
+      - name: swapArrays1
+        id: swapArrays1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: swapArrays1
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.swapArrays1
+          timeout: 1
+          max-score: 1
+      - name: swapArrays2
+        id: swapArrays2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: swapArrays2
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.swapArrays2
+          timeout: 1
+          max-score: 1
+      - name: camelCase1
+        id: camelCase1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: camelCase1
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.camelCase1
+          timeout: 10
+          max-score: 2
+      - name: camelCase2
+        id: camelCase2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: camelCase2
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.camelCase2
+          timeout: 1
+          max-score: 1
+      - name: checkDigit1
+        id: checkDigit1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: checkDigit1
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.checkDigit1
+          timeout: 1
+          max-score: 1
+      - name: checkDigit2
+        id: checkDigit2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: checkDigit2
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.checkDigit2
+          timeout: 1
+          max-score: 1
+      - name: checkDigit3
+        id: checkDigit3
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: checkDigit3
+          setup-command: ''
+          command: gradle test --tests at.ac.fhcampuswien.AppTest.checkDigit3
+          timeout: 1
+          max-score: 1
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          ONEMONTHCALENDAR1_RESULTS: "${{steps.oneMonthCalendar1.outputs.result}}"
+          ONEMONTHCALENDAR2_RESULTS: "${{steps.oneMonthCalendar2.outputs.result}}"
+          LCG_RESULTS: "${{steps.lcg.outputs.result}}"
+          GUESSINGGAME1_RESULTS: "${{steps.guessingGame1.outputs.result}}"
+          GUESSINGGAME2_RESULTS: "${{steps.guessingGame2.outputs.result}}"
+          RANDOMNUMBERBETWEENONEANDHUNDRED_RESULTS: "${{steps.randomNumberBetweenOneAndHundred.outputs.result}}"
+          SWAPARRAYS1_RESULTS: "${{steps.swapArrays1.outputs.result}}"
+          SWAPARRAYS2_RESULTS: "${{steps.swapArrays2.outputs.result}}"
+          CAMELCASE1_RESULTS: "${{steps.camelCase1.outputs.result}}"
+          CAMELCASE2_RESULTS: "${{steps.camelCase2.outputs.result}}"
+          CHECKDIGIT1_RESULTS: "${{steps.checkDigit1.outputs.result}}"
+          CHECKDIGIT2_RESULTS: "${{steps.checkDigit2.outputs.result}}"
+          CHECKDIGIT3_RESULTS: "${{steps.checkDigit3.outputs.result}}"
+        with:
+          runners: oneMonthCalendar1,oneMonthCalendar2,lcg,guessingGame1,guessingGame2,randomNumberBetweenOneAndHundred,swapArrays1,swapArrays2,camelCase1,camelCase2,checkDigit1,checkDigit2,checkDigit3
