@@ -135,6 +135,9 @@ jobs:
           command: gradle test --tests at.ac.fhcampuswien.AppTest.checkDigit3
           timeout: 1
           max-score: 1
+      - name: Debug Outputs
+        run: |
+          echo "oneMonthCalendar1 result: ${{ steps.oneMonthCalendar1.outputs.result }}"
       - name: Autograding Reporter
         uses: classroom-resources/autograding-grading-reporter@v1
         env:
